@@ -10,7 +10,7 @@ const getAllAssets = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const parsedUrl = url.parse(req.url);
         const parsedQuery = querystring.parse(parsedUrl.query);
@@ -25,33 +25,14 @@ const getAllAssets = async (req, res, next) => {
     }
 };
 
-const getPaginatedAssets = async (req, res, next) => {
-    try {
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
-        }
-        const { items, page } = req.params;
-        const PaginatedResponse = await assetsService.findPaginatedAssets(items, page);
-        if(PaginatedResponse === null){
-            res.json(new ErrorResponse().notFoundError());
-        }else{
-            res.json(new SuccessResponse().OkMessage(PaginatedResponse));
-        }
-    } catch (error) {
-        next(error);
-    }
-};
-
 const getAssetById = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const { id } = req.params ;
         const serviceResponse = await assetsService.findAssetById(id);
-
         if(serviceResponse === null){
             res.json(new ErrorResponse().notFoundError());
         }else{
@@ -66,11 +47,10 @@ const getAssetsByEmployeeId = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const { id } = req.params ;
         const serviceResponse = await assetsService.findAssetByEmployeeId(id);
-
         if(serviceResponse === null){
             res.json(new ErrorResponse().notFoundError());
         }else{
@@ -85,16 +65,15 @@ const createAsset = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const assetDTO = new AssetDTO(req.body);
         const serviceResponse = await assetsService.createAsset(assetDTO);
-
-        if (serviceResponse == 404){
+        if (serviceResponse === 404){
             res.json(new ErrorResponse().notFoundError());
+        }else{
+            res.json(new SuccessResponse().OkMessage(serviceResponse));
         }
-        
-        res.json(new SuccessResponse().OkMessage(serviceResponse));
     } catch (error) {
         next(error);
     }
@@ -104,15 +83,16 @@ const updateAsset = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const assetDTO = new AssetDTO(req.body);
         const { id } = req.params;
         const serviceResponse = await assetsService.updateAsset(assetDTO, id);
-        if (serviceResponse == 404){
+        if (serviceResponse === 404){
             res.json(new ErrorResponse().notFoundError());
+        }else{
+            res.json(new SuccessResponse().OkMessage(serviceResponse));
         }
-        res.json(new SuccessResponse().OkMessage(serviceResponse));
     } catch (error) {
         next(error);
     }
@@ -122,7 +102,7 @@ const deleteAsset = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const { id } = req.params;
         const serviceResponse = await assetsService.deleteAsset(id);
@@ -137,11 +117,10 @@ const deleteAsset = async (req, res, next) => {
 };
 
 module.exports = {
-    getAllAssets: getAllAssets,
-    getPaginatedAssets: getPaginatedAssets,
-    getAssetById: getAssetById,
-    getAssetsByEmployeeId: getAssetsByEmployeeId,
-    createAsset: createAsset,
-    updateAsset: updateAsset,
-    deleteAsset: deleteAsset
-}
+    getAllAssets,
+    getAssetById,
+    getAssetsByEmployeeId,
+    createAsset,
+    updateAsset,
+    deleteAsset
+};

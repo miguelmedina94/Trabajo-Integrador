@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Alert, Divider, Paper, Snackbar } from '@mui/material';
+import { Alert,Snackbar } from '@mui/material';
 import { Stack } from '@mui/system';
 
-import { reemplazarEmpleado } from '../../store/empleadosSlice/slice';
+import { updateEmployee } from '../../store/empleadosSlice/slice';
 import { validateSliceChange } from '../../utils/validate';
 import Formulario from '../formulario';
-import imagen from '../../media/alert.png'
 import { getEmployeeById } from '../../services/httpServices';
 
 const ShowEdit = ( props ) => {
@@ -59,7 +58,7 @@ const ShowEdit = ( props ) => {
         switch (mode){
             case 'edit':
                 if(alert.type === 'success'){
-                    dispatch(reemplazarEmpleado(empleado));
+                    dispatch(updateEmployee(empleado));
                     setEditable(!editable);
                     setMode('show');
                     setAlert({open: true, 

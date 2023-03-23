@@ -10,21 +10,6 @@ class EmployeeService {
         return modelResponse.length > 0 ? modelResponse : null;
     }
 
-    static async findPaginatedEmployees (items, page) {
-        const allEmployeesResponse = await this.findAllEmployee();
-        if(allEmployeesResponse.length <= items){
-            return allEmployeesResponse;
-        }
-        let offset;
-        if(page === 1){
-            offset = 0;
-        }else{
-            offset = (page-1)*items;
-        }
-        const modelResponse = await employeeModel.findPaginatedEmployees(items, offset);
-        return modelResponse.length > 0 ? modelResponse : null;
-    }
-
     static async findEmployeeById (id) {
         const modelResponse = await employeeModel.findEmployeeById(id);
         return modelResponse.length > 0 ? modelResponse[0] : null;
@@ -40,7 +25,8 @@ class EmployeeService {
         if(findResponse){
             const updatedEmployee = completeEmployee(employee,findResponse);
             const updateResponse = await employeeModel.updateEmployee(updatedEmployee,id);
-            return updateResponse ? {afectedRows: updateResponse} : 400;
+            console.log('id: ',id);
+            return updateResponse ? {afectedRows: updateResponse, idUpdated: updatedEmployee.id} : 400;
         }else{
             return 404;
         }
@@ -48,6 +34,7 @@ class EmployeeService {
 
     static async deleteEmployee (id) {
         const findResponse = await this.findEmployeeById (id);
+        console.log('delete');
         if(findResponse){
             const gralResponse = {};
             const deleteAssetsResponse = await assetModel.unlinkAssetByEmployeeId(id);

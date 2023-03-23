@@ -10,7 +10,7 @@ const getAllEmployees = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const parsedUrl = url.parse(req.url);
         const parsedQuery = querystring.parse(parsedUrl.query);
@@ -25,29 +25,11 @@ const getAllEmployees = async (req, res, next) => {
     }
 };
 
-const getPaginatedEmployee = async (req, res, next) => {
-    try {
-        const errors = validationResult(req);
-        if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
-        }
-        const { items, page } = req.params;
-        const PaginatedResponse = await employeeService.findPaginatedEmployees(items, page);
-        if(PaginatedResponse === null){
-            res.json(new ErrorResponse().notFoundError());
-        }else{
-            res.json(new SuccessResponse().OkMessage(PaginatedResponse));
-        }
-    } catch (error) {
-        next(error);
-    }
-};
-
 const getEmployeeById = async (req, res, next) => {
     try{
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const { id } = req.params;
         const serviceResponse = await employeeService.findEmployeeById(id);
@@ -60,11 +42,12 @@ const getEmployeeById = async (req, res, next) => {
         next(error);
     }
 };
+
 const createEmployee = async (req, res, next) => {
     try{
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const employeeDTO = new EmployeeDTO(req.body);
         const serviceResponse = await employeeService.createEmployee(employeeDTO);
@@ -82,7 +65,7 @@ const updateEmployee = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const employeeDTO = new EmployeeDTO(req.body);
         const { id } = req.params;
@@ -106,7 +89,7 @@ const deleteEmployee = async (req, res, next) => {
     try {
         const errors = validationResult(req);
         if(!errors.isEmpty()){
-            res.json(new ErrorResponse().BadRequestError(errors.array()))
+            res.json(new ErrorResponse().BadRequestError(errors.array()));
         }
         const { id } = req.params;
         const serviceResponse = await employeeService.deleteEmployee(id);
@@ -121,10 +104,9 @@ const deleteEmployee = async (req, res, next) => {
 };
 
 module.exports = {
-    getAllEmployees: getAllEmployees,
-    getPaginatedEmployee: getPaginatedEmployee,
-    getEmployeeById: getEmployeeById,
-    createEmployee: createEmployee,
-    updateEmployee: updateEmployee,
-    deleteEmployee: deleteEmployee
-}
+    getAllEmployees,
+    getEmployeeById,
+    createEmployee,
+    updateEmployee,
+    deleteEmployee
+};

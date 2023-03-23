@@ -10,21 +10,6 @@ class AssetsService {
         return modelResponse.length > 0 ? modelResponse : null;
     }
 
-    static async findPaginatedAssets (items, page) {
-        const allAssetsResponse = await this.findAllAssets();
-        if(allAssetsResponse.length <= items){
-            return allAssetsResponse;
-        }
-        let offset;
-        if(page === 1){
-            offset = 0;
-        }else{
-            offset = (page-1)*items;
-        }
-        const modelResponse = await assetModel.findPaginatedAssets(items, offset);
-        return modelResponse.length > 0 ? modelResponse : null;
-    }
-
     static async findAssetById (id) {
         const modelResponse = await assetModel.findAssetById(id);
         return modelResponse.length > 0 ? modelResponse[0] : null;
@@ -37,7 +22,6 @@ class AssetsService {
 
     static async createAsset (asset) {
         const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);
-        console.log(findEmployeeResponse);
         if(findEmployeeResponse.length === 0){
             return 404;
         }

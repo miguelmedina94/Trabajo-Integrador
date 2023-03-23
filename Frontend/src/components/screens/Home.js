@@ -4,9 +4,8 @@ import { Fab, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { PersonAddAlt1, PersonRemove } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { eliminarEmpleado, getEmployees } from '../../store/empleadosSlice/slice';
+import { deleteEmployee, getEmployees } from '../../store/empleadosSlice/slice';
 import { Header } from '../common/Header';
-import { getAllEmployees} from '../../services/httpServices';
 
 const Lista = () => {
     // ======= HOOOKS ===========
@@ -28,7 +27,7 @@ const Lista = () => {
     }
 
     const deleteSelectedList = () => {
-        dispatch(eliminarEmpleado(deleteList))
+        dispatch(deleteEmployee(deleteList[0]))
     }
 
     // ======= PRESETS ===========

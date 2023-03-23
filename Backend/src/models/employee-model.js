@@ -2,7 +2,6 @@ const connection = require('../config/db-config');
 
 const findAllEmployee = async (whereQuery) => {
     const completeQuery = `SELECT * FROM employees e WHERE 1${whereQuery}`
-    console.log(completeQuery);
     const rows = await connection.query(completeQuery).spread((rows) => rows);
     return rows;
 };
