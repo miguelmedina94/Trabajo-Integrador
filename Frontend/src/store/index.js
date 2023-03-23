@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import empleadosSlice from "./empleadosSlice/slice";
+import employeesSlice from "./empleadosSlice/slice";
+import thunk from "redux-thunk";
+
 
 export const store = configureStore({
     reducer: {
-        empleados: empleadosSlice,
-        idNuevo: empleadosSlice
+        employees: employeesSlice,
     },
+    middleware: [thunk],
 });

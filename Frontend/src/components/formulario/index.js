@@ -9,7 +9,7 @@ const Formulario = ({config}) => {
     // ======= PRESETS ===========
     //FUNCION QUE ENTREGA LOS TEXTFIELDS PERSONALIZADOS
     const customTextField = (name) =>{
-        const label = name[0].toUpperCase() + name.substring(1).replace('_',' de ');
+        const label = name[0].toUpperCase() + name.substring(1).replace('_',' ');
         if(name === 'fecha_contrato'){
             return (
                 <TextField  name={name}
@@ -47,13 +47,12 @@ const Formulario = ({config}) => {
                 <Typography variant='h5'>
                     {config.title}
                 </Typography>
-                {customTextField('nombre')}
-                {customTextField('apellido')}
-                {customTextField('email')}
-                {customTextField('telefono')}
-                {customTextField('salario')}
-                {customTextField('comision')}
-                {customTextField('fecha_contrato')}
+                {customTextField('first_name')}
+                {customTextField('last_name')}
+                {customTextField('cuit')}
+                {customTextField('team_id')}
+                {customTextField('join_date')}
+                {customTextField('rol')}
                 <Container sx={{width: '100%',display: 'flex', justifyContent: 'flex-end', margin: '20px'}}>
                     <Button variant='contained' onClick={config.primaryButton} sx={{marginRight: '10px'}}>
                         {config.textPrimaryButton}

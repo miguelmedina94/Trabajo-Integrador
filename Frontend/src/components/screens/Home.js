@@ -4,18 +4,19 @@ import { Fab, Paper } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { PersonAddAlt1, PersonRemove } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import { eliminarEmpleado } from '../../store/empleadosSlice/slice';
+import { eliminarEmpleado, getEmployees } from '../../store/empleadosSlice/slice';
 import { Header } from '../common/Header';
+import { getAllEmployees} from '../../services/httpServices';
 
 const Lista = () => {
     // ======= HOOOKS ===========
-    const {empleados} = useSelector(state => state.empleados);
+    const {employees} = useSelector(state => state.employees)
     const [deleteList, setDeleteList] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     useEffect(() => {
-    
-    }, [empleados])
+        dispatch(getEmployees());
+    }, [])
     
     // ======= FUNCTIONS ===========
     const agregarEmpleado = () =>{
@@ -34,19 +35,21 @@ const Lista = () => {
     //PREPARAR LAS COLUMNAS Y QUE DATOS LEERAN DEL EMPLEADOS
     const columns = [
         { field: 'id', headerName: 'ID',type: 'number', width: 70 },
-        { field: 'nombre', headerName: 'Nombre', width: 130 },
-        { field: 'apellido', headerName: 'Apellido', width: 130 },
-        { field: 'email',headerName: 'Email',width: 180},
-        { field: 'telefono', headerName: 'Telefono',type: 'string', width: 130 }
+        { field: 'first_name', headerName: 'Nombre',type: 'string', width: 130 },
+        { field: 'last_name', headerName: 'Apellido', width: 130 },
+        { field: 'cuit',headerName: 'Cuit',width: 150},
+        { field: 'team_id', headerName: 'Id de equipo', width: 130 },
+        { field: 'join_date', headerName: 'Fecha de entrada',type: 'date', width: 130 },
+        { field: 'rol', headerName: 'Rol',type: 'string', width: 130 }
     ];
     
     // ======= RENDER ===========
     return (
         <>
             <Header/>
-            <Paper sx={{ height: 350, maxWidth: '700px'}}>
+            <Paper sx={{ height: 350}}>
                 <DataGrid
-                    rows={empleados}
+                    rows={employees}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}

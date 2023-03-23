@@ -16,5 +16,8 @@
     "mysql": "^2.18.1",
     "mysql2-promise": "^0.1.4",
     "nodemon": "^2.0.21"
+  },
+  "dependencies": {
+    "cors": "^2.8.5"
   }
 }

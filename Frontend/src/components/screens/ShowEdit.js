@@ -9,11 +9,11 @@ import { reemplazarEmpleado } from '../../store/empleadosSlice/slice';
 import { validateSliceChange } from '../../utils/validate';
 import Formulario from '../formulario';
 import imagen from '../../media/alert.png'
+import { getEmployeeById } from '../../services/httpServices';
 
 const ShowEdit = ( props ) => {
     // ======= HOOOKS ===========
     const {id} = useParams();
-    const {empleados} = useSelector(state => state.empleados);
     const [mode , setMode] = useState(props.mode);
     const [alert , setAlert] = useState({type:'success'});
     const [editable, setEditable] = useState();
@@ -63,13 +63,14 @@ const ShowEdit = ( props ) => {
                     setEditable(!editable);
                     setMode('show');
                     setAlert({open: true, 
-                        message: `Se modifico el empleado ${empleado.nombre} correctamente`,
+                        message: `Se modifico el empleado ${empleado.first_name} correctamente`,
                         type: 'success'});
                 }
                 break;
             case 'show':
                 setEditable(!editable);
                 setMode('edit');
+                setAlert({type: 'success'});
                 break;
             default:
                 return;
@@ -121,23 +122,9 @@ const ShowEdit = ( props ) => {
         );
     };
 
-    const empleadoNotFound = () => {
-        setTimeout(() => {
-            navigate('/');
-        }, 3000);
-        return(
-            <Paper sx={{maxWidth: '500px'}}>
-            <Divider />
-                <Alert severity='error'> NO SE ENCONTRO EL EMPLEADO</Alert>
-                <img src={imagen} alt='error' width={500}/>
-            <Divider />
-        </Paper>
-        )
-    }
-
     // ======= PRESETS ===========
-    const setearEmpleado = () => {
-        const empleadoSeleccionado = empleados.find( actual => actual.id === id);
+    const setearEmpleado = async () => {
+        const empleadoSeleccionado = await getEmployeeById(id);
         setEmpleado(empleadoSeleccionado);
     }
 
@@ -152,7 +139,7 @@ const ShowEdit = ( props ) => {
             </>
         );
     }else{
-        return empleadoNotFound();
+        // return empleadoNotFound();
     }
 }
 
