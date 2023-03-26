@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { getAllEmployees, updateEmployeeService, deleteEmployeeService } from "../../services/httpServices";
+import { getAllEmployees, updateEmployeeService, deleteEmployeeService } from "../../services/employeeHttpServices";
 
 export const getEmployees = createAsyncThunk(
     'employees/getEmployees',
@@ -12,6 +12,7 @@ export const getEmployees = createAsyncThunk(
 export const updateEmployee = createAsyncThunk(
     'employees/updateEmployee',
     async (employee) => {
+    console.log('createasynthunk');
     const response = await updateEmployeeService(employee);
     return response;
     }
@@ -35,36 +36,15 @@ const initialState = {
 export const employeesSlice = createSlice({
     name: 'employees',
     initialState,
-    reducers:{
-        cargarEmployees: (state, action) => {
-            console.log('se carga employees');
-            state.employees = {...action.payload}
-        },
-        nuevoEmpleado: (state,action) => {
-            state.employees.push(action.payload);
-            state.idNuevo++;
-        },
-        reemplazarEmpleado: (state,action) => {
-            const findIndex = state.employees.findIndex(employee => employee.id === action.payload.id);
-            state.employees[findIndex] = action.payload;
-            console.log('index: ', findIndex);
-            const serviceResponse =  updateEmployee(action.payload);
-            console.log(serviceResponse);
-        },
-        eliminarEmpleado: (state, action) => {
-            for(let i = 0 ; i < action.payload.length ; i++){
-                state.employees = state.employees.filter(empleado => empleado.id !== action.payload[i])
-            }
-        }
-    },
     extraReducers: (reducers) => {
         reducers
         .addCase(getEmployees.fulfilled, (state, action) => {
             state.employees = [...action.payload];
         })
         .addCase(updateEmployee.fulfilled, (state, action) => {
+            console.log('addcase', action.payload);
             if(action.payload.code !== 200){
-                getEmployees();
+                //getEmployees();
             }
         })
         .addCase(deleteEmployee.fulfilled, (state, action) => {

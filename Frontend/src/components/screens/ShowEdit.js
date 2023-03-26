@@ -8,7 +8,7 @@ import { Stack } from '@mui/system';
 import { updateEmployee } from '../../store/empleadosSlice/slice';
 import { validateSliceChange } from '../../utils/validate';
 import Formulario from '../formulario';
-import { getEmployeeById } from '../../services/httpServices';
+import { getEmployeeById } from '../../services/employeeHttpServices';
 
 const ShowEdit = ( props ) => {
     // ======= HOOOKS ===========

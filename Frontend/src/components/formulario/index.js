@@ -10,7 +10,7 @@ const Formulario = ({config}) => {
     //FUNCION QUE ENTREGA LOS TEXTFIELDS PERSONALIZADOS
     const customTextField = (name) =>{
         const label = name[0].toUpperCase() + name.substring(1).replace('_',' ');
-        if(name === 'fecha_contrato'){
+        if(name === 'join_date'){
             return (
                 <TextField  name={name}
                 required

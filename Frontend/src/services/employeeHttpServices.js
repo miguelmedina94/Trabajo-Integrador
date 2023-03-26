@@ -1,16 +1,25 @@
+import { EmployeeDTO } from "../DTO/employeeDTO";
+
 export const getAllEmployees = async () => {
     const url = 'http://localhost:5000/api/employees';
     const response = await fetch(url);
     const dataResponse = await response.json();
     console.log('datos: ',dataResponse);
-    return dataResponse.data;
+    const employees = [];
+    dataResponse.data.forEach(actEmployee => {
+        const employeeDTO = new EmployeeDTO(actEmployee);
+        employees.push(employeeDTO);
+    });
+    console.log(employees);
+    return employees;
 };
 
 export const getEmployeeById = async (id) => {
     const url = `http://localhost:5000/api/employees/${id}`;
     const response = await fetch(url);
     const dataResponse = await response.json();
-    return dataResponse.data;
+    const employeeDTO = new EmployeeDTO(dataResponse.data);
+    return employeeDTO;
 };
 
 export const updateEmployeeService = async (employee) => {
