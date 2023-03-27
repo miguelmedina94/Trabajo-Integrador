@@ -66,7 +66,7 @@ const Formulario = ({config}) => {
                         </Button>
                     </Container>
                 </Box>
-                <DataGrid
+                {config.assets && <DataGrid
                     rows={config.assets}
                     columns={config.columns}
                     autoHeight={true}
@@ -80,6 +80,7 @@ const Formulario = ({config}) => {
                     disableSelectionOnClick
                     onRowClick={config.goEdit}
                 />
+                }
             </Paper>
         );
     }
