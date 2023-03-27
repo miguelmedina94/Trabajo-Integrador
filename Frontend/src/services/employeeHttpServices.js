@@ -1,17 +1,17 @@
 import { EmployeeDTO } from "../DTO/employeeDTO";
 
-export const getAllEmployees = async () => {
-    const url = 'http://localhost:5000/api/employees';
+
+export const getAllEmployees = async (items, page) => {
+    const url = `http://localhost:5000/api/employees?items=${items}&page=${page}`;
     const response = await fetch(url);
     const dataResponse = await response.json();
-    console.log('datos: ',dataResponse);
+    const { totalItems, employeeList } = dataResponse.data;
     const employees = [];
-    dataResponse.data.forEach(actEmployee => {
+    employeeList.forEach(actEmployee => {
         const employeeDTO = new EmployeeDTO(actEmployee);
         employees.push(employeeDTO);
     });
-    console.log(employees);
-    return employees;
+    return {employees, totalItems};
 };
 
 export const getEmployeeById = async (id) => {
@@ -45,9 +45,27 @@ export const updateEmployeeService = async (employee) => {
 
 export const deleteEmployeeService = async (id) => {
     const url = `http://localhost:5000/api/employees/${id}`;
-    console.log('dispara');
     const response = await fetch(url, {
         method: 'DELETE'
+    });
+    const dataResponse = await response.json();
+    return dataResponse.data;
+};
+
+export const createEmployeeService = async (employee) => {
+    const { first_name, last_name, cuit, team_id, join_date, rol } = employee;
+    const url = `http://localhost:5000/api/employees/`;
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            first_name,
+            last_name,
+            cuit,
+            team_id,
+            join_date,
+            rol
+        })
     });
     const dataResponse = await response.json();
     return dataResponse.data;

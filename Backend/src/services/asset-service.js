@@ -5,9 +5,11 @@ const completeAsset = require('../utils/merge/asset');
 
 class AssetsService {
     static async findAllAssets (paramsQuery) {
+        const countResponse = await assetModel.findTotalAssets();
+        const { 'COUNT(*)': totalItems } = countResponse[0];
         const whereQuery = queryAsset(paramsQuery);
-        const modelResponse = await assetModel.findAllAssets(whereQuery);
-        return modelResponse.length > 0 ? modelResponse : null;
+        const assetList = await assetModel.findAllAssets(whereQuery);
+        return assetList.length > 0 ? {assetList, totalItems} : null;
     }
 
     static async findAssetById (id) {
@@ -30,6 +32,7 @@ class AssetsService {
     }
 
     static async updateAsset (asset, id) {
+        console.log('ejecutaservice: ',asset);
         const findAssetResponse = await this.findAssetById (id);
         if(findAssetResponse){
             const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);

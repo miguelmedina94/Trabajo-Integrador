@@ -34,10 +34,10 @@ const queryEmployee = (queryParams) => {
     }
     if(page){
         let offset;
-        if(page === 1){
-            offset = 0;
+        if(page === 0){
+            offset = page;
         }else{
-            offset = (page-1)*items;
+            offset = (page)*items;
         }
         response = response.concat(` OFFSET ${offset}`)
     }

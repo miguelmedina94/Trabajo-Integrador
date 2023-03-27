@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
-import { Button, IconButton, Modal, Paper, Typography } from '@mui/material';
+import { Button, Modal, Paper, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 
 export const Header = () => {

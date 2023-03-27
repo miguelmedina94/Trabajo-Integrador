@@ -5,7 +5,9 @@ const queryAsset = (queryParams) => {
         code, 
         description, 
         purchase_date, 
-        employee_id
+        employee_id,
+        items,
+        page
         } = queryParams;
     let response = '';
     if(name){
@@ -25,6 +27,18 @@ const queryAsset = (queryParams) => {
     }
     if(employee_id){
         response = response.concat(` AND employee_id LIKE '${employee_id}%'`)
+    }
+    if(items){
+        response = response.concat(` LIMIT ${items}`)
+    }
+    if(page){
+        let offset;
+        if(page === 0){
+            offset = page;
+        }else{
+            offset = (page)*items;
+        }
+        response = response.concat(` OFFSET ${offset}`)
     }
     return response;
 };

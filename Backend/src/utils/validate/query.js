@@ -12,7 +12,7 @@ const validatePagination = [
         .if(query('items').exists())
         .isNumeric()
         .withMessage('This is a not valid page param')
-        .isInt({min: 1})
+        .isInt({min: 0})
         .withMessage('This is a not valid item param')
         .notEmpty()
         .withMessage('id is require')

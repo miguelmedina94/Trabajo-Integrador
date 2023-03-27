@@ -6,6 +6,12 @@ const findAllEmployee = async (whereQuery) => {
     return rows;
 };
 
+const findTotalEmployees = async () => {
+    const query = `SELECT COUNT(*) FROM employees`;
+    const rows = await connection.query(query).spread((rows) => rows);
+    return rows;
+}
+
 const findPaginatedEmployees = async (items, offset) => {
     const rows = await connection.query(`SELECT * FROM employees a LIMIT ${items} OFFSET ${offset}`).spread((rows) => rows);
     return rows;
@@ -57,6 +63,7 @@ const deleteEmployee = async (id) => {
 
 module.exports = {
     findAllEmployee: findAllEmployee,
+    findTotalEmployees: findTotalEmployees,
     findPaginatedEmployees: findPaginatedEmployees,
     findEmployeeById: findEmployeeById,
     createEmployee: createEmployee,

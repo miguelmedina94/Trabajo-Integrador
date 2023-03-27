@@ -1,22 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { getAllEmployees, updateEmployeeService, deleteEmployeeService } from "../../services/employeeHttpServices";
+import { getAllEmployees, updateEmployeeService, deleteEmployeeService, createEmployeeService } from "../../services/employeeHttpServices";
 
 export const getEmployees = createAsyncThunk(
     'employees/getEmployees',
-    async () => {
-    const response = await getAllEmployees()
-    return response;
+    async (pagination) => {
+        const { pageSize, pageSelected } = pagination
+        const response = await getAllEmployees(pageSize, pageSelected);
+        return response;
     }
 );
 
 export const updateEmployee = createAsyncThunk(
     'employees/updateEmployee',
     async (employee) => {
-    console.log('createasynthunk');
     const response = await updateEmployeeService(employee);
     return response;
     }
-)
+);
 
 export const deleteEmployee = createAsyncThunk(
     'employees/deleteEmployee',
@@ -27,10 +27,21 @@ export const deleteEmployee = createAsyncThunk(
             dispatch(getEmployees())
         }
     }
-)
+);
+
+
+export const createEmployee = createAsyncThunk(
+    'employees/createEmployee',
+    async (employee) => {
+        console.log('employees: ',employee);
+        const response = await createEmployeeService(employee);
+        console.log('response: ',response);
+    }
+);
 
 const initialState = {
-    employees : []
+    employees : [],
+    totalItems: 0
 }
 
 export const employeesSlice = createSlice({
@@ -39,16 +50,8 @@ export const employeesSlice = createSlice({
     extraReducers: (reducers) => {
         reducers
         .addCase(getEmployees.fulfilled, (state, action) => {
-            state.employees = [...action.payload];
-        })
-        .addCase(updateEmployee.fulfilled, (state, action) => {
-            console.log('addcase', action.payload);
-            if(action.payload.code !== 200){
-                //getEmployees();
-            }
-        })
-        .addCase(deleteEmployee.fulfilled, (state, action) => {
-            
+            state.employees = [...action.payload.employees];
+            state.totalItems = action.payload.totalItems;
         })
     }
 });

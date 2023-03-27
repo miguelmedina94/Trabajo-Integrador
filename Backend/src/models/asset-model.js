@@ -7,6 +7,12 @@ const findAllAssets = async (whereQuery) => {
     return rows;
 };
 
+const findTotalAssets = async () => {
+    const query = `SELECT COUNT(*) FROM assets`;
+    const rows = await connection.query(query).spread((rows) => rows);
+    return rows;
+}
+
 const findPaginatedAssets = async (items, offset) => {
     const rows = await connection.query(`SELECT * FROM assets a LIMIT ${items} OFFSET ${offset}`).spread((rows) => rows);
     return rows;
@@ -48,6 +54,7 @@ const createAsset = async (values) => {
 };
 const updateAsset = async (asset, id) => {
     const { name, type, code, description, purchase_date, employee_id} = asset;
+    console.log('ejecutaupdate');
     const result = await connection.query("UPDATE assets SET name=?, type=?, code=?, description=?, purchase_date=?, employee_id=? WHERE id=?",
     [name,
     type,
@@ -71,6 +78,7 @@ const unlinkAssetByEmployeeId = async (id) => {
 
 module.exports = {
     findAllAssets: findAllAssets,
+    findTotalAssets: findTotalAssets,
     findPaginatedAssets: findPaginatedAssets,
     findAssetById: findAssetById,
     findAssetByEmployeeId: findAssetByEmployeeId,

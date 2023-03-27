@@ -5,9 +5,11 @@ const queryEmployee = require('../utils/createQuery/where-employee');
 
 class EmployeeService {
     static async findAllEmployee (paramsQuery) {
+        const countResponse = await employeeModel.findTotalEmployees();
+        const { 'COUNT(*)': totalItems } = countResponse[0];
         const whereQuery = queryEmployee(paramsQuery);
-        const modelResponse = await employeeModel.findAllEmployee(whereQuery);
-        return modelResponse.length > 0 ? modelResponse : null;
+        const employeeList = await employeeModel.findAllEmployee(whereQuery);
+        return employeeList.length > 0 ? {employeeList, totalItems}: null;
     }
 
     static async findEmployeeById (id) {
