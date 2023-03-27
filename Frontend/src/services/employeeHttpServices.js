@@ -99,10 +99,13 @@ export const getAssetsByEmployeeId = async (id) => {
         const dataResponse = await response.json();
         const assetsList = dataResponse.data;
         const assets = [];
-        assetsList.forEach(actAsset => {
-            const assetDTO = new AssetDTO(actAsset);
-            assets.push(assetDTO);
-        });
+        if(assets.length > 0){
+            assetsList.forEach(actAsset => {
+                const assetDTO = new AssetDTO(actAsset);
+                assets.push(assetDTO);
+            });
+        }
+        
         return assets;
     } catch (error) {
         throw error
