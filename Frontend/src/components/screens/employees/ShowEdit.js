@@ -8,7 +8,8 @@ import { Stack } from '@mui/system';
 import { updateEmployee } from '../../../store/empleadosSlice/slice';
 import { validateSliceChange } from '../../../utils/validateEmployee';
 import Formulario from '../../formulario/employees';
-import { getEmployeeById } from '../../../services/employeeHttpServices';
+import { getEmployeeById, getAssetsByEmployeeId } from '../../../services/employeeHttpServices';
+import { Header } from '../../common/Header';
 
 const ShowEdit = ( props ) => {
     // ======= HOOOKS ===========
@@ -17,6 +18,9 @@ const ShowEdit = ( props ) => {
     const [alert , setAlert] = useState({type:'success'});
     const [editable, setEditable] = useState();
     const [empleado, setEmpleado] = useState(null);
+    const [assets, setAssets] = useState([]);
+    const [pageSize, setPageSize] = useState(3);
+
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -33,7 +37,12 @@ const ShowEdit = ( props ) => {
             secondaryButton: secondaryButton,
             onChangeField: onChangeField,
             getValueTF: getValueTF,
-            onBlurField: onBlurField
+            onBlurField: onBlurField,
+            pageSize: pageSize,
+            changeSize: changeSize,
+            assets: assets,
+            columns: columns,
+            goEdit: goEdit
             };
         switch (mode) {
             case 'show':
@@ -123,10 +132,30 @@ const ShowEdit = ( props ) => {
         );
     };
 
+    const changeSize = (newSize) => {
+        setPageSize(newSize)
+    }
+
+    const goEdit = (rowData) => {
+        navigate(`/assets/show/${rowData.id}`)
+    }
+
+    const columns = [
+        { field: 'id', headerName: 'ID',type: 'number', width: 70 },
+        { field: 'name', headerName: 'Nombre',type: 'string', width: 130 },
+        { field: 'type', headerName: 'Tipo', width: 130 },
+        { field: 'code', headerName: 'Codigo/Serial', width: 130 },
+        { field: 'description',headerName: 'Descripcion',width: 150},
+        { field: 'purchase_date', headerName: 'Fecha de compra',type: 'date', width: 130 },
+        { field: 'employee_id', headerName: 'Empleado',type: 'string', width: 130 }
+    ];
+
     // ======= PRESETS ===========
     const setearEmpleado = async () => {
         const empleadoSeleccionado = await getEmployeeById(id);
         setEmpleado(empleadoSeleccionado);
+        const employeeAssets = await getAssetsByEmployeeId(id);
+        setAssets(employeeAssets);
     }
 
     // ======= RENDER ===========
@@ -136,6 +165,7 @@ const ShowEdit = ( props ) => {
                 <Stack spacing={2} sx={{ width: '100%' }}>
                     {mostrarMensaje()}
                 </Stack>
+                <Header/>
                 <Formulario config={screenConfig()}/>
             </>
         );

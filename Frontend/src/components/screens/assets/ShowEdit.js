@@ -9,6 +9,7 @@ import { updateAsset } from '../../../store/assetsSlice/slice';
 import { validateSliceChange } from '../../../utils/validateAsset';
 import Formulario from '../../formulario/assets';
 import { getAssetById } from '../../../services/assetHttpServices';
+import { Header } from '../../common/Header';
 
 const ShowEdit = ( props ) => {
     // ======= HOOOKS ===========
@@ -136,6 +137,7 @@ const ShowEdit = ( props ) => {
                 <Stack spacing={2} sx={{ width: '100%' }}>
                     {mostrarMensaje()}
                 </Stack>
+                <Header/>
                 <Formulario config={screenConfig()}/>
             </>
         );

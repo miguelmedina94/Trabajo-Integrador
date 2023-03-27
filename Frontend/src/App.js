@@ -7,7 +7,7 @@ import Assets from './components/screens/assets';
 
 const App = () => {
     return (
-    <BrowserRouter>
+    <BrowserRouter >
         <Container>
             <Routes>
                 <Route path='/employees/*' element={<Employees/>}/>

@@ -1,3 +1,4 @@
+import { AssetDTO } from "../DTO/assetDTO";
 import { EmployeeDTO } from "../DTO/employeeDTO";
 
 
@@ -89,4 +90,22 @@ export const createEmployeeService = async (employee) => {
     } catch (error) {
         throw error
     }
+};
+
+export const getAssetsByEmployeeId = async (id) => {
+    try {
+        const url = `http://localhost:5000/api/assets/employeeId/${id}`;
+        const response = await fetch(url);
+        const dataResponse = await response.json();
+        const assetsList = dataResponse.data;
+        const assets = [];
+        assetsList.forEach(actAsset => {
+            const assetDTO = new AssetDTO(actAsset);
+            assets.push(assetDTO);
+        });
+        return assets;
+    } catch (error) {
+        throw error
+    }
+    
 };
