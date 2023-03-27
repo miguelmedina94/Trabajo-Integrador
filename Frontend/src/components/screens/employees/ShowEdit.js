@@ -84,7 +84,7 @@ const ShowEdit = ( props ) => {
                 setEditable(false);
                 break;
             case 'show':
-                navigate('/');
+                navigate('/employees');
                 break;
             default:
                 return;

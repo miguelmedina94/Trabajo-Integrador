@@ -30,11 +30,9 @@ const validatePost = [
         .withMessage('This is a not valid purchase_date')
         .notEmpty()
         .withMessage('purchase_date is require'),
-    body('employee_id')
+    body('employee_id').optional()
         .isNumeric()
         .withMessage('This is a not valid id')
-        .notEmpty()
-        .withMessage('employee_id is require')
         .isLength({max: 11})
         .withMessage('employee_id have a not valid length')
 ];

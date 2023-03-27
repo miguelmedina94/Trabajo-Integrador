@@ -84,7 +84,7 @@ const ShowEdit = ( props ) => {
                 setEditable(false);
                 break;
             case 'show':
-                navigate('/');
+                navigate('/assets');
                 break;
             default:
                 return;
@@ -126,7 +126,6 @@ const ShowEdit = ( props ) => {
     // ======= PRESETS ===========
     const setearAsset = async () => {
         const assetSeleccionado = await getAssetById(id);
-        console.log('asset devuelto: ',assetSeleccionado);
         setAsset(assetSeleccionado);
     }
 

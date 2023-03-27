@@ -20,7 +20,6 @@ const completeAsset = (newAsset, oldAsset) => {
     if(newAsset.purchase_date){
         updatedAsset.purchase_date = newAsset.purchase_date;
     }
-
     if(newAsset.employee_id){
         updatedAsset.employee_id = newAsset.employee_id;
     }

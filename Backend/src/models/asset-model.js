@@ -2,7 +2,6 @@ const connection = require('../config/db-config');
 
 const findAllAssets = async (whereQuery) => {
     const completeQuery = `SELECT * FROM assets a WHERE 1${whereQuery}`
-    console.log(completeQuery);
     const rows = await connection.query(completeQuery).spread((rows) => rows);
     return rows;
 };
@@ -31,7 +30,6 @@ const findAssetByEmployeeId = async (id) => {
 };
 
 const createAsset = async (values) => {
-    console.log(values);
     const { 
         name,
         type,
@@ -54,7 +52,6 @@ const createAsset = async (values) => {
 };
 const updateAsset = async (asset, id) => {
     const { name, type, code, description, purchase_date, employee_id} = asset;
-    console.log('ejecutaupdate');
     const result = await connection.query("UPDATE assets SET name=?, type=?, code=?, description=?, purchase_date=?, employee_id=? WHERE id=?",
     [name,
     type,

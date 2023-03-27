@@ -25,7 +25,7 @@ const Lista = () => {
     
     // ======= FUNCTIONS ===========
     const addAsset = () =>{
-        navigate('/new');
+        navigate('/assets/new');
     };
 
     const goEdit = (rowData) => {
@@ -37,7 +37,8 @@ const Lista = () => {
     }
 
     const confirmDelete = () => {
-        dispatch(deleteAsset(deleteList[0]));
+        console.log('dispara');
+        dispatch(deleteAsset({asset: deleteList[0],pageSize}));
         setShowModal(false);
     }
     
@@ -75,6 +76,7 @@ const Lista = () => {
     // ======= RENDER ===========
     return (
         <>
+            <Header/>
             <Modal open={showModal} onClose={cancelDelete}>
                 <Box sx={{display: 'flex', justifyContent: 'center'}}>
                     <Paper sx={{ p: 2,  maxWidth: '50%',justifyContent: 'center', position: 'absolute', top: '35%'}}>
@@ -90,8 +92,8 @@ const Lista = () => {
                     </Paper>
                 </Box>
             </Modal>
-            <Header/>
-            <Paper>
+            <Paper elevation={5}>
+                <Typography variant='h4' sx={{display: 'flex', justifyContent: 'center'}}>Lista de Assets</Typography>
                 <DataGrid
                     rows={assets}
                     columns={columns}

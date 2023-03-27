@@ -4,27 +4,39 @@ import { getAllAssets, updateAssetService, deleteAssetService, createAssetServic
 export const getAssets = createAsyncThunk(
     'assets/getAssets',
     async (pagination) => {
-        const { pageSize, pageSelected } = pagination
-        const response = await getAllAssets(pageSize, pageSelected);
-        return response;
+        try {
+            const { pageSize, pageSelected } = pagination
+            const response = await getAllAssets(pageSize, pageSelected);
+            return response;
+        } catch (error) {
+            throw error
+        }
+        
     }
 );
 
 export const updateAsset = createAsyncThunk(
     'assets/updateAsset',
     async (asset) => {
-    const response = await updateAssetService(asset);
-    return response;
+        try {
+            const response = await updateAssetService(asset);
+            return response;
+        } catch (error) {
+            throw error
+        }
     }
 );
 
 export const deleteAsset = createAsyncThunk(
     'assets/deleteAsset',
-    async (asset, {dispatch}) => {
-        console.log('assets: ',asset);
-        const response = await deleteAssetService(asset);
-        if(response.AssetAfectedRows !== 0){
-            dispatch(getAssets())
+    async (action, {dispatch}) => {
+        try {
+            const response = await deleteAssetService(action.asset);
+            if(response.afectedRows !== 0){
+                dispatch(getAssets({pageSize: action.pageSize, pageSelected: 0}))
+            }
+        } catch (error) {
+            throw error
         }
     }
 );
@@ -33,9 +45,12 @@ export const deleteAsset = createAsyncThunk(
 export const createAsset = createAsyncThunk(
     'assets/createAsset',
     async (asset) => {
-        console.log('assets: ',asset);
-        const response = await createAssetService(asset);
-        console.log('response: ',response);
+        try {
+            const response = await createAssetService(asset);
+            return response;
+        } catch (error) {
+            throw error
+        }
     }
 );
 

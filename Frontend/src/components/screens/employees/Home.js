@@ -25,11 +25,11 @@ const Lista = () => {
     
     // ======= FUNCTIONS ===========
     const agregarEmpleado = () =>{
-        navigate('/new');
+        navigate('/employees/new');
     };
 
     const goEdit = (rowData) => {
-        navigate(`/show/${rowData.id}`)
+        navigate(`/employees/show/${rowData.id}`)
     }
 
     const deleteSelectedList = () => {
@@ -37,7 +37,7 @@ const Lista = () => {
     }
 
     const confirmDelete = () => {
-        dispatch(deleteEmployee(deleteList[0]));
+        dispatch(deleteEmployee({employee: deleteList[0],pageSize}));
         setShowModal(false);
     }
     
@@ -91,7 +91,8 @@ const Lista = () => {
                 </Box>
             </Modal>
             <Header/>
-            <Paper>
+            <Paper elevation={5}>
+                <Typography variant='h4' sx={{display: 'flex', justifyContent: 'center'}}>Vista Principal</Typography>
                 <DataGrid
                     rows={employees}
                     columns={columns}

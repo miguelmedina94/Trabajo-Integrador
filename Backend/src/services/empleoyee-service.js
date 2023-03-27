@@ -27,7 +27,6 @@ class EmployeeService {
         if(findResponse){
             const updatedEmployee = completeEmployee(employee,findResponse);
             const updateResponse = await employeeModel.updateEmployee(updatedEmployee,id);
-            console.log('id: ',id);
             return updateResponse ? {afectedRows: updateResponse, idUpdated: updatedEmployee.id} : 400;
         }else{
             return 404;
@@ -36,7 +35,6 @@ class EmployeeService {
 
     static async deleteEmployee (id) {
         const findResponse = await this.findEmployeeById (id);
-        console.log('delete');
         if(findResponse){
             const gralResponse = {};
             const deleteAssetsResponse = await assetModel.unlinkAssetByEmployeeId(id);

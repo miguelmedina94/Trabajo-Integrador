@@ -23,21 +23,24 @@ class AssetsService {
     }
 
     static async createAsset (asset) {
-        const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);
-        if(findEmployeeResponse.length === 0){
-            return 404;
+        if(asset.employee_id){
+            const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);
+            if(findEmployeeResponse.length === 0){
+                return 404;
+            }
         }
         const modelResponse = await assetModel.createAsset(asset);
         return modelResponse ? modelResponse : null;
     }
 
     static async updateAsset (asset, id) {
-        console.log('ejecutaservice: ',asset);
         const findAssetResponse = await this.findAssetById (id);
         if(findAssetResponse){
-            const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);
-            if(findEmployeeResponse.length === 0){
-                return 404;
+            if(asset.employee_id){
+                const findEmployeeResponse = await employeeModel.findEmployeeById(asset.employee_id);
+                if(findEmployeeResponse.length === 0){
+                    return 404;
+                }
             }
             const updatedEmployee = completeAsset(asset,findAssetResponse);
             const updateResponse = await assetModel.updateAsset(updatedEmployee,id);

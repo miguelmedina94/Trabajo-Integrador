@@ -29,7 +29,7 @@ const Create = (props) => {
             getValueTF: getValueTF,
             onBlurField: onBlurField,
             editable: true,
-            textSecondaryButton: 'Volver',
+            textSecondaryButton: 'Limpiar',
             textPrimaryButton: 'Guardar'
             };
         return config;
@@ -43,7 +43,7 @@ const Create = (props) => {
                     type: 'success'});
             setTimeout(() => {
                 dispatch(createEmployee(empleado));
-                navigate('/');
+                navigate('/employees');
             }, 3000);
         }
     }

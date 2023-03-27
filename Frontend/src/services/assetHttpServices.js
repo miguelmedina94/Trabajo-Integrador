@@ -23,7 +23,6 @@ export const getAssetById = async (id) => {
 };
 
 export const updateAssetService = async (asset) => {
-    console.log('sale de service: ',asset);
     const {id, name, type, code, description, purchase_date, employee_id} = asset;
     const url = `http://localhost:5000/api/assets/${id}`;
     const response = await fetch(url, {
@@ -39,7 +38,6 @@ export const updateAssetService = async (asset) => {
         })
     });
     const dataResponse = await response.json();
-    console.log(dataResponse);
     return dataResponse;
 };
 
@@ -53,20 +51,24 @@ export const deleteAssetService = async (id) => {
 };
 
 export const createAssetService = async (asset) => {
-    const { first_name, last_name, cuit, team_id, join_date, rol } = asset;
-    const url = `http://localhost:5000/api/assets/`;
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            first_name,
-            last_name,
-            cuit,
-            team_id,
-            join_date,
-            rol
-        })
-    });
-    const dataResponse = await response.json();
-    return dataResponse.data;
+    try{
+        const { name, type, code, description, purchase_date, employee_id } = asset;
+        const url = `http://localhost:5000/api/assets/`;
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name,
+                type,
+                code,
+                description,
+                purchase_date,
+                employee_id
+            })
+        });
+        const dataResponse = await response.json();
+        return dataResponse.data;
+    }catch(error){
+        throw error;
+    }
 };

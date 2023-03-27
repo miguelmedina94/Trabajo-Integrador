@@ -1,23 +1,23 @@
 //FUNCION PARA VALIDAD LOS CAMPOS SI ESTAN LLENOS Y QUE NO GUARDE EN ESE CASO
-export const validateSliceChange = (empleado,e) => {
+export const validateSliceChange = (asset,e) => {
     const error = {type: 'success'};
-        if ((empleado.first_name === '' || !isNaN(e.target.value)) && e.target.name === 'first_name'){
+        if ((asset.name === '' || !isNaN(e.target.value)) && e.target.name === 'name'){
             error.message = `El campo nombre esta vacio o es invalido`;
             error.open = true;
             error.type = 'error'
         }
-        if ((empleado.last_name === '' || !isNaN(e.target.value))  && e.target.name === 'last_name'){
-            error.message = `El campo apellido esta vacio o es invalido`;
+        if ((asset.type === '' || !isNaN(e.target.value))  && e.target.name === 'type'){
+            error.message = `El campo tipo esta vacio o es invalido`;
             error.open = true;
             error.type = 'error'
         }
-        if ((empleado.cuit === '' || isNaN(e.target.value))   && e.target.name === 'cuit'){
-            error.message = `El campo telefono esta vacio o es invalido`;
+        if ((asset.description === '' || isNaN(e.target.value))   && e.target.name === 'description'){
+            error.message = `El campo descripcion esta vacio o es invalido`;
             error.open = true;
             error.type = 'error'
         }
-        if (empleado.join_date === '' && e.target.name === 'join_date'){
-            error.message = `El campo fecha contrato esta vacio`;
+        if (asset.purchase_date === '' && e.target.name === 'purchase_date'){
+            error.message = `El campo fecha de compra esta vacio`;
             error.open = true;
             error.type = 'error'
         }

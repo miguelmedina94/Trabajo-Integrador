@@ -8,15 +8,23 @@ export const Header = () => {
     // ============= HOOKS ===============
     const navigate = useNavigate();
     const [show , setShow] = useState(false);
+    const [rute, setRute] = useState('');
+    const [text, setText] = useState('');
     
     // ============= FUNCTIONS ============
-    const showModal = () => {
+    const showModalHome = () => {
+        setText('¿Desea ir a la vista Principal?');
+        setRute('/employees');
+        setShow(true);
+    }
+
+    const showModalAssets = () => {
+        setText('¿Desea ir a la Lista de Assets?');
+        setRute('/assets');
         setShow(true);
     }
 
     // ============= PRESETS ==============
-    const message = '¿Desea Volver a la vista Principal?';
-    const button1 = 'Volver';
     // ============= RENDER  ==============
     return (
         <>
@@ -24,17 +32,17 @@ export const Header = () => {
                 <Box sx={{display: 'flex', justifyContent: 'center'}}>
                 <Paper elevation={3} sx={{position: 'absolute', maxWidth: '50%', padding: ' 10px', top: '35%'}}>
                     <Typography variant='h6' sx={{margin: '10px'}}>
-                        {message}
+                        {text}
                     </Typography>
                     <Box sx={{display: 'flex', justifyContent: 'flex-end'}}>
                         <Button 
                         variant='contained'
                         onClick={() => {
                             setShow(false)
-                            navigate('/')}}
+                            navigate(rute)}}
                         sx={{marginRight:'10px'}}
                         >
-                            {button1}
+                            Aceptar
                         </Button>
                         <Button 
                         variant='contained'
@@ -48,10 +56,16 @@ export const Header = () => {
                 </Paper>
                 </Box>
             </Modal>
-            <Button onClick={showModal} variant='contained' sx={{marginBottom: '10px', bgcolor:'#62B6CB'}}>
+            <Button onClick={showModalHome} variant='contained' sx={{margin: '10px', bgcolor:'#62B6CB'}}>
                 <HomeIcon />
                 <Typography>
                     Home
+                </Typography>
+            </Button>
+            <Button onClick={showModalAssets} variant='contained' sx={{margin: '10px', bgcolor:'#62B6CB'}}>
+                <HomeIcon />
+                <Typography>
+                    Assets
                 </Typography>
             </Button>
         </>

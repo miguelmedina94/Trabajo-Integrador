@@ -2,14 +2,14 @@ import { Alert, Snackbar, Stack} from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { validateSliceChange } from '../../../utils/validateEmployee';
-import { createEmployee } from '../../../store/empleadosSlice/slice';
+import { validateSliceChange } from '../../../utils/validateAsset';
+import { createAsset } from '../../../store/assetsSlice/slice';
 import { Header } from '../../common/Header';
 import Formulario from '../../formulario/assets';
 
 const Create = (props) => {
     // ======= HOOOKS ===========
-    const [empleado , setEmpleado] = useState({});
+    const [asset , setAsset] = useState({});
     const [alert , setAlert] = useState({type:'success'});
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -21,15 +21,15 @@ const Create = (props) => {
     // ======= FUNCTIONS ===========
     const screenConfig = () =>{
         const config = {
-            title: `Creando Nuevo Empleado`,
-            empleado: empleado,
+            title: `Creando Nuevo Asset`,
+            asset: asset,
             primaryButton: primaryButton,
             secondaryButton: secondaryButton,
             onChangeField: onChangeField,
             getValueTF: getValueTF,
             onBlurField: onBlurField,
             editable: true,
-            textSecondaryButton: 'Volver',
+            textSecondaryButton: 'Limpiar',
             textPrimaryButton: 'Guardar'
             };
         return config;
@@ -39,11 +39,11 @@ const Create = (props) => {
     const primaryButton = () => {
         if(alert.type === 'success'){
             setAlert({open: true, 
-                    message: `Se creo el empleado ${empleado.first_name} correctamente`,
+                    message: `Se creo el asset ${asset.name} correctamente`,
                     type: 'success'});
             setTimeout(() => {
-                dispatch(createEmployee(empleado));
-                navigate('/');
+                dispatch(createAsset(asset));
+                navigate('/assets');
             }, 3000);
         }
     }
@@ -51,17 +51,16 @@ const Create = (props) => {
     const secondaryButton = () => {
         setearTextFields();
     };
-
     const setearTextFields = () => {
-        const empleadoVacio = {
-                        first_name: '', 
-                        last_name: '',
-                        cuit: '',
-                        join_date: '',
-                        rol: '',
-                        team_id: ''
+        const assetVacio = {
+                        name: '', 
+                        type: '',
+                        code: '',
+                        description: '',
+                        purchase_date: '',
+                        employee_id: null
                         }
-        setEmpleado(empleadoVacio);
+        setAsset(assetVacio);
     }
 
     //FUNCION ONCLOSE PARA CERRAR EL ALERT AUTOMATICA O MANUALMENTE
@@ -83,19 +82,18 @@ const Create = (props) => {
 
     const onChangeField = (e) => {
         const value = e.target.value;
-        setEmpleado({
-            ...empleado,
+        setAsset({
+            ...asset,
             [e.target.name]: value
         });
-        console.log(empleado);
     };
 
     const getValueTF = (attr) =>{
-        return empleado[attr] ? empleado[attr] : '';
+        return asset[attr] ? asset[attr] : '';
     }
 
     const onBlurField = (e) => {
-        setAlert(validateSliceChange(empleado,e));
+        setAlert(validateSliceChange(asset,e));
     }
 
     // ======= PRESETS ===========

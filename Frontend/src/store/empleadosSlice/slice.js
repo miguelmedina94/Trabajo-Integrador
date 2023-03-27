@@ -4,28 +4,41 @@ import { getAllEmployees, updateEmployeeService, deleteEmployeeService, createEm
 export const getEmployees = createAsyncThunk(
     'employees/getEmployees',
     async (pagination) => {
-        const { pageSize, pageSelected } = pagination
-        const response = await getAllEmployees(pageSize, pageSelected);
-        return response;
+        try {
+            const { pageSize, pageSelected } = pagination
+            const response = await getAllEmployees(pageSize, pageSelected);
+            return response;
+        } catch (error) {
+            throw error
+        }
+        
     }
 );
 
 export const updateEmployee = createAsyncThunk(
     'employees/updateEmployee',
     async (employee) => {
-    const response = await updateEmployeeService(employee);
-    return response;
+        try {
+            const response = await updateEmployeeService(employee);
+            return response;
+        } catch (error) {
+            throw error
+        }
     }
 );
 
 export const deleteEmployee = createAsyncThunk(
     'employees/deleteEmployee',
-    async (employee, {dispatch}) => {
-        console.log('employees: ',employee);
-        const response = await deleteEmployeeService(employee);
-        if(response.EmployeeAfectedRows !== 0){
-            dispatch(getEmployees())
+    async (action, {dispatch}) => {
+        try {
+            const response = await deleteEmployeeService(action.employee);
+            if(response.EmployeeAfectedRows !== 0){
+                dispatch(getEmployees({pageSize: action.pageSize, pageSelected: 0}))
+            }
+        } catch (error) {
+            throw error
         }
+        
     }
 );
 
@@ -33,9 +46,12 @@ export const deleteEmployee = createAsyncThunk(
 export const createEmployee = createAsyncThunk(
     'employees/createEmployee',
     async (employee) => {
-        console.log('employees: ',employee);
-        const response = await createEmployeeService(employee);
-        console.log('response: ',response);
+        try {
+            const response = await createEmployeeService(employee);
+            return response;
+        } catch (error) {
+            throw error
+        }
     }
 );
 
