@@ -87,7 +87,6 @@ const Create = (props) => {
             ...empleado,
             [e.target.name]: value
         });
-        console.log(empleado);
     };
 
     const getValueTF = (attr) =>{

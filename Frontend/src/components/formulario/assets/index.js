@@ -2,7 +2,6 @@ import React from 'react';
 import { Button,Container,Paper, TextField, Typography } from '@mui/material';
 
 const Formulario = ({config}) => {
-    // console.log('configuracion: ',config);
     // ======= HOOOKS ===========
 
     // ======= FUNCTIONS ===========

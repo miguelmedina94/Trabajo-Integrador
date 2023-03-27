@@ -57,7 +57,6 @@ const Lista = () => {
     function handleFilterChange(model) {
         const {columnField, value} = model.items[0];
         setFilterData({...filterData,[columnField]: value})
-        console.log('filterData: ',filterData);
     }
 
     // ======= PRESETS ===========

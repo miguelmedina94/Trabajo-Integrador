@@ -37,7 +37,6 @@ const Lista = () => {
     }
 
     const confirmDelete = () => {
-        console.log('dispara');
         dispatch(deleteAsset({asset: deleteList[0],pageSize}));
         setShowModal(false);
     }
@@ -58,7 +57,6 @@ const Lista = () => {
     function handleFilterChange(model) {
         const {columnField, value} = model.items[0];
         setFilterData({...filterData,[columnField]: value})
-        console.log('filterData: ',filterData);
     }
 
     // ======= PRESETS ===========
